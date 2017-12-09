@@ -9,8 +9,48 @@ using std::cout;
 using std::endl;
 using std::cin;
 using std::string;
+
+void check()
+{
+	std::ifstream plik;
+	plik.open("data.txt");
+	if (!plik.good())
+	{
+		plik.close();
+		std::ofstream plik;
+		plik.open("data.txt");
+		cout << "Tworze nowa baze \"data.txt\"" << endl;
+		plik << endl;
+		plik.close();
+	}
+	else
+		plik.close();
+}
+
 void add_book()
 {
+	check();
+	std::ofstream plik;
+	plik.open("data.txt", std::ios::ate);
+	string title;
+	string author;
+	struct date;
+	{
+		unsigned int day;
+		unsigned int month;
+		unsigned int year;
+	}
+	unsigned int price;
+
+	cout << "Podaj tytul:" << endl;
+	std::getline(cin, title);
+	cout << "Podaj autora:" << endl;
+
+	cout << "Podaj date:" << endl;
+
+	cout << "Podaj cenê:" << endl;
+
+
 
 }
 
