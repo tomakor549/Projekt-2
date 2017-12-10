@@ -10,48 +10,82 @@ using std::endl;
 using std::cin;
 using std::string;
 
-void check()
+
+void add_book(std::fstream &plik)
 {
-	std::ifstream plik;
-	plik.open("data.txt");
+	plik.open("data.txt", std::ios::ate | std::ios::app);
 	if (!plik.good())
 	{
 		plik.close();
+		cout << "Tworze nowa baze \"data.txt\"" << endl;
 		std::ofstream plik;
 		plik.open("data.txt");
-		cout << "Tworze nowa baze \"data.txt\"" << endl;
-		plik << endl;
-		plik.close();
 	}
-	else
-		plik.close();
-}
 
-void add_book()
-{
-	check();
-	std::ofstream plik;
-	plik.open("data.txt", std::ios::ate);
 	string title;
 	string author;
-	struct date;
-	{
+	bool repeat = true;
 		unsigned int day;
 		unsigned int month;
 		unsigned int year;
-	}
-	unsigned int price;
+	float price;
 
 	cout << "Podaj tytul:" << endl;
 	std::getline(cin, title);
 	cout << "Podaj autora:" << endl;
+	std::getline(cin, author);
+	cout << "Podaj date wydania:" << endl;
 
-	cout << "Podaj date:" << endl;
+	cout << "dzien: ";
+	while (repeat)
+	{
+		cin >> day;
+		if (day > 31)
+		{
+			cout << "Zly dzien, sproboj jeszcze raz." << endl;
+		}
+		else
+		{
+			repeat = false;
+		}
+	}
+	repeat = true;
 
-	cout << "Podaj cenê:" << endl;
+	cout << "miesiac: ";
+	while (repeat)
+	{
+		cin >> month;
+		if (month > 12)
+		{
+			cout << "Zly miesiac, sproboj jeszcze raz." << endl;
+		}
+		else
+		{
+			repeat = false;
+		}
+	}
+	repeat = true;
+	cout << "rok: ";
 
+	while (repeat)
+	{
+		cin >> year;
+		if (year > 2017)
+		{
+			cout << "Zly rok, sproboj jeszcze raz." << endl;
+		}
+		else
+		{
+			repeat = false;
+		}
+	}
+	repeat = true;
 
+	cout << "Podaj cene:" << endl;
+	cin >> price;
 
+	plik << title << "\t" << author << "\t" << day << "-" << month << "-" << year << "\t" << price << "zl"<< endl;
+	plik.close();
 }
 
 int reachability()
@@ -68,14 +102,16 @@ int amount()
 
 int wpisz()
 {
+
 	string date;
 	int choise;
 	getline(cin, date);
+
 	int length = date.length();
 
 	if (length != 1)
 	{
-		return 0;
+		return 6;
 	}
 	else
 	{
@@ -86,8 +122,8 @@ int wpisz()
 		}
 		else
 		{
-			return 0;
+			return 6;
 		}
 	}
-	return 0;
+	return 6;
 }
