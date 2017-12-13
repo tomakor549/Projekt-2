@@ -99,7 +99,7 @@ int amount()
 	return 0;
 }
 
-int wpisz(int length, string date)
+int wpisz(string date)
 {
 
 	int length = date.length();
