@@ -66,7 +66,6 @@ void add_book(std::fstream &plik)
 	}
 	repeat = true;
 	cout << "rok: ";
-
 	while (repeat)
 	{
 		cin >> year;
@@ -100,10 +99,27 @@ int amount()
 	return 0;
 }
 
-int wpisz()
+int wpisz(int length, string date)
 {
 
-	string date;
+	int length = date.length();
+
+	if (length > 1)
+	{
+		return 6;
+	}
+	else
+	{
+		if (date[0] == '1' || date[0] == '2' || date[0] == '3' || date[0] == '4' || date[0] == '5')
+		{
+			int i = atoi(date.c_str());
+			return i;
+		}
+		else
+			return 0;
+	}
+
+	/*string date;
 	int choise;
 	getline(cin, date);
 
@@ -125,5 +141,5 @@ int wpisz()
 			return 6;
 		}
 	}
-	return 6;
+	return 6;*/
 }
