@@ -1,4 +1,3 @@
-Agata_Ja ABC_DEF 785 87 
-Lol_KOl DSD_Lo 7845 45 
-JAHKH_JHK POl_Pol 4 7 
-Pol_Lol 47 47 47 
+B D 1 1 
+G 1 1 1 
+G D 1 1 
