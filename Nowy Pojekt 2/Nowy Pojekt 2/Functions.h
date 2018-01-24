@@ -36,6 +36,8 @@ void file_and_console(struct data *head);
 
 void save_file(struct data *head);
 
+unsigned int taste_publication_date();
+
 struct data *user_switch(struct data *head, int choice);
 
 void user(struct data *head);

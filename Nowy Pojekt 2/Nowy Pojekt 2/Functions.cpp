@@ -287,7 +287,7 @@ void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 			std::cout << head->author << " \"" << head->title << "\" " << head->publication_date << "r. " << head->price << "zl" << std::endl;
 			author = exchange_author(head->author);
 			title = exchange_title(head->title);
-			plik << head->author << " " << head->title << " " << head->publication_date << " " << head->price << " " << std::endl;
+			plik << author << " " << title << " " << head->publication_date << " " << head->price << " " << std::endl;
 		}
 		head = head->next;
 	}
@@ -319,11 +319,38 @@ void save_file(struct data *head)	//wczytuje do pliku
 		{
 			author = exchange_author(head->author);
 			title = exchange_title(head->title);
-			plik << head->author << " " << head->title << " " << head->publication_date << " " << head->price << " " << std::endl;
+			plik << author << " " << title << " " << head->publication_date << " " << head->price << " " << std::endl;
 		}
 		head = head->next;
 	}
 	plik.close();
+}
+
+unsigned int taste_publication_date()
+{
+	std::string publication_date;
+	unsigned int date;
+	int l;
+
+	while (true)
+	{
+		std::cout << "Wypisz date wydania:" << std::endl;
+		getline(std::cin, publication_date);
+		l = publication_date.length();
+		if (l != 4)
+		{
+			std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
+			continue;
+		}
+		date = atoi(publication_date.c_str());
+		if (date < 2017 && date>1900)
+		{
+			return date;
+		}
+		else
+			std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
+	}
+	
 }
 
 struct data *user_switch(struct data *head, int choice)
@@ -335,20 +362,16 @@ struct data *user_switch(struct data *head, int choice)
 		unsigned int publication_date;
 		double price;
 		std::cout << "Wypisz autora:" << std::endl;
-		getline(std::cin, author);					//(zmiana) - dodaæ sprawdzanie + ewentualn¹ zmiana perwszej litery na du¿¹
+		getline(std::cin, author);					
+		
 		std::cout << "Wypisz tytul:" << std::endl;
-		getline(std::cin, title);					//(zmiana) - dodaæ sprawdzanie + ewentualn¹ zmiana perwszej litery na du¿¹
-		do
-		{
-			std::cout << "Wypisz date wydania:" << std::endl;
-			std::cin >> publication_date;
-			if (publication_date > 2018)
-				std::cout << "B³¹d" << std::endl;
-			else
-				break;
-		} while (true);
+		getline(std::cin, title);					
+		
+		publication_date = taste_publication_date();
+		
 		std::cout << "Wypisz cene:" << std::endl;
 		std::cin >> price;
+
 		std::cin.sync();
 		std::cin.ignore();
 		std::cin.clear();
