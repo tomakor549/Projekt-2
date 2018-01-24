@@ -5,37 +5,39 @@
 #include <fstream>
 #include "Functions.h"
 
-struct data *exchange(struct data *element, bool i)
+struct data *exchange0(struct data *element)
 {
-	if (i) //Odczytywanie z pliku
+	for (int i = 0; i < element->author.length(); i++)
 	{
-		for (int i = 0; i < element->author.length(); i++)
-		{
-			if (element->author[i] == ' ')
-				element->author[i] = '_';
-		}
-		for (int i = 0; i < element->title.length(); i++)
-		{
-			if (element->title[i] == ' ')
-				element->title[i] = '_';
-		}
-		return element;
+		if (element->author[i] == '_')
+			element->author[i] = ' ';
 	}
-	else //Wczytywanie do pliku
+	for (int i = 0; i < element->title.length(); i++)
 	{
-		for (int i = 0; i < element->author.length(); i++)
-		{
-			if (element->author[i] == '_')
-				element->author[i] = ' ';
-		}
-		for (int i = 0; i < element->title.length(); i++)
-		{
-			if (element->title[i] == '_')
-				element->title[i] = ' ';
-		}
-		return element;
+		if (element->title[i] == '_')
+			element->title[i] = ' ';
 	}
+	return element;
+}
 
+std::string exchange_author(std::string author)
+{
+	for (int i = 0; i < author.length(); i++)
+	{
+		if (author[i] == ' ')
+			author[i] = '_';
+	}
+	return author;
+}
+
+std::string exchange_title(std::string title)
+{
+	for (int i = 0; i < title.length(); i++)
+	{
+		if (title[i] == ' ')
+			title[i] = '_';
+	}
+	return title;
 }
 
 unsigned int verification(std::string choice) //sprawdza, czy u¿ytkownik wpisa³ dobr¹ wartoœæ
@@ -55,7 +57,7 @@ unsigned int verification(std::string choice) //sprawdza, czy u¿ytkownik wpisa³ 
 
 struct data *add_book(struct data *head, std::string author, std::string title, unsigned int publication_date, double price)		//dodawanie ksi¹¿ki
 {
-	//head, tail z juz istniejacej listy, lub nowe = nullptr
+	//head z juz istniejacej listy, lub nowe = nullptr
 	struct data *element;
 	element = new struct data;
 	element->author = author;
@@ -65,7 +67,7 @@ struct data *add_book(struct data *head, std::string author, std::string title, 
 	element->next = nullptr;
 	element->previous = nullptr;
 	element->down = nullptr;
-	if (head == nullptr)			//(zmiana) - jak dodam wczytywanie z pliku to musze to przemyœleæ
+	if (head == nullptr)
 	{
 		head = element;
 		return element;
@@ -260,6 +262,10 @@ void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 	std::ofstream plik;
 	plik.open("new.txt");
 
+
+	std::string author;
+	std::string title;
+
 	while (head != nullptr)
 	{
 		if (head->down != nullptr)
@@ -270,18 +276,18 @@ void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 			while (help != nullptr)
 			{
 				std::cout << "\t\"" << help->title << "\" " << help->publication_date << "r. " << help->price << "zl" << std::endl;
-				head = exchange(head, 1);
-				plik << help->author << " " << help->title << " " << help->publication_date << " " << help->price << " " << std::endl;
-				head = exchange(head, 0);
+				author = exchange_author(help->author);
+				title = exchange_title(help->title);
+				plik << author << " " << title << " " << help->publication_date << " " << help->price << " " << std::endl;
 				help = help->down;
 			}
 		}
 		else
 		{
 			std::cout << head->author << " \"" << head->title << "\" " << head->publication_date << "r. " << head->price << "zl" << std::endl;
-			head = exchange(head, 1);
+			author = exchange_author(head->author);
+			title = exchange_title(head->title);
 			plik << head->author << " " << head->title << " " << head->publication_date << " " << head->price << " " << std::endl;
-			head = exchange(head, 0);
 		}
 		head = head->next;
 	}
@@ -292,6 +298,8 @@ void save_file(struct data *head)	//wczytuje do pliku
 {
 	std::ofstream plik;
 	plik.open("new.txt");
+	std::string author;
+	std::string title;
 
 	while (head != nullptr)
 	{
@@ -301,13 +309,16 @@ void save_file(struct data *head)	//wczytuje do pliku
 			help = head;
 			while (help != nullptr)
 			{
-				plik << help->author << " " << help->title << " " << help->publication_date << " " << help->price << " " << std::endl;
+				author = exchange_author(help->author);
+				title = exchange_title(help->title);
+				plik << author << " " << title << " " << help->publication_date << " " << help->price << " " << std::endl;
 				help = help->down;
 			}
 		}
 		else
 		{
-			head = exchange(head, 1);
+			author = exchange_author(head->author);
+			title = exchange_title(head->title);
 			plik << head->author << " " << head->title << " " << head->publication_date << " " << head->price << " " << std::endl;
 		}
 		head = head->next;
@@ -327,8 +338,15 @@ struct data *user_switch(struct data *head, int choice)
 		getline(std::cin, author);					//(zmiana) - dodaæ sprawdzanie + ewentualn¹ zmiana perwszej litery na du¿¹
 		std::cout << "Wypisz tytul:" << std::endl;
 		getline(std::cin, title);					//(zmiana) - dodaæ sprawdzanie + ewentualn¹ zmiana perwszej litery na du¿¹
-		std::cout << "Wypisz date wydania:" << std::endl;
-		std::cin >> publication_date;
+		do
+		{
+			std::cout << "Wypisz date wydania:" << std::endl;
+			std::cin >> publication_date;
+			if (publication_date > 2018)
+				std::cout << "B³¹d" << std::endl;
+			else
+				break;
+		} while (true);
 		std::cout << "Wypisz cene:" << std::endl;
 		std::cin >> price;
 		std::cin.sync();
@@ -452,7 +470,7 @@ void load()
 
 			if (help == nullptr)
 			{
-				head = exchange(element, 0);
+				head = exchange0(element);
 				help = head;
 				continue;
 			}
@@ -463,15 +481,15 @@ void load()
 				{
 					help = help->down;
 				}
-				help->down = element;
+				help->down = exchange0(element);
 			}
 			else
 			{
 				element->previous = help;
-				element->previous->next = element;
+				element->previous->next = exchange0(element);
 			}
+			element = exchange0(element);
 			help = element;
-			element = exchange(element, 0);
 		}
 		std::cout << std::endl << "Rozpoczynam prace" << std::endl;
 		user(head);

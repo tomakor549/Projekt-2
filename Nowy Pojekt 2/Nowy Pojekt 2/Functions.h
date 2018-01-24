@@ -22,7 +22,7 @@ struct data
 	struct data *down;
 };
 
-struct data *exchange(struct data *element, bool i);
+struct data *exchange0(struct data *element, bool i);
 
 unsigned int verification(std::string choice);
 
