@@ -3,18 +3,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-
-struct data
-{
-	std::string author;
-	std::string title;
-	unsigned int publication_date;
-	double price;
-
-	struct data *next;
-	struct data *previous;
-	struct data *down;
-};
+#include "Functions.h"
 
 struct data *exchange(struct data *element, bool i)
 {
