@@ -1,3 +1,6 @@
-B D 1 1 
-G 1 1 1 
-G D 1 1 
+Agata_Christie ABC 2001 47.47 
+C.S.S_Lewis Narnia 5478 4 
+J.K._Rowling Harry_Potter 45 47 
+Tolkien Hobbit 4789 45 
+Tolkien Dwie Wierze 2145 45 
+Tolkien Wyprawa 457 45 
