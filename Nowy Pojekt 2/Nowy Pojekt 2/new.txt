@@ -1,6 +1,5 @@
-Agata_Christie ABC 2001 47.47 
-C.S.S_Lewis Narnia 5478 4 
-J.K._Rowling Harry_Potter 45 47 
-Tolkien Hobbit 4789 45 
-Tolkien Dwie Wierze 2145 45 
-Tolkien Wyprawa 457 45 
+ABC_DEF FDR 5 45 
+Pol Lol 74 5 
+Rok KoK 478 47 
+Sang Lang 45 45 
+Sang Log 4 4 
