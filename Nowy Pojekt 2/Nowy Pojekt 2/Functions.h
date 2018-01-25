@@ -48,4 +48,4 @@ struct data *user_switch(struct data *head, int choice);
 
 void user(struct data *head);
 
-void load();
+void load(std::string wczytaj);

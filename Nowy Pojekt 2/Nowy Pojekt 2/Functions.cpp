@@ -359,41 +359,47 @@ double taste_price()
 	double price;
 	int l;
 
+	int i;
+	int dot = 0;
+	int count = 0;
+	bool good = true;
+
 	while (true)
 	{
 		std::cout << "Wypisz cene:" << std::endl;
 		getline(std::cin, money);
 		l = money.length();
-		if (l<0 && l>5)
+		
+		for (i = 0; i < l; i++)
 		{
-			std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
-			continue;
-		}
-		else
-		{
-			int i;
-			int one = 0;
-			bool good = true;
-			for (i = 0; i < l; i++)
+			if (count != 0)
+				count++;
+
+			if (money[i] == '.')
 			{
-				if (money[i] == '.')
-				{
-					if (i == 0 && i==l)
-						good = false;
-					one++;
-				}
+				if (i == 0 || i == l)
+					good = false;
+				dot++;
+				count++;
+			}
+			else
 				if (money[i]<'0' || money[i]>'9')
 					good = false;
-			}
-			if (one > 1)
-				good == false;
-
-			if(good==false)
-			{
-				std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
-				continue;
-			}
 		}
+
+		if (dot > 1)
+			good = false;
+
+		if (count > 3)
+			good = false;
+
+		if (good == false)
+		{
+			std::cout << "Zla cena, sproboj raz jeszcze." << std::endl;
+			std::cout << std::endl;
+			continue;
+		}
+
 		break;
 	}
 
@@ -505,12 +511,12 @@ void user(struct data *head)
 	}
 }
 
-void load()
+void load(std::string wczytaj)
 {
 	struct data *head = nullptr;
 
 	std::ifstream plik;
-	plik.open("new.txt");
+	plik.open(wczytaj);
 	if (plik.good() == false)
 	{
 		std::cout << "Nie znaleziono bazy. Tworze nowa." << std::endl;
