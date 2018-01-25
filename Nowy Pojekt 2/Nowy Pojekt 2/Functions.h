@@ -22,7 +22,11 @@ struct data
 	struct data *down;
 };
 
-struct data *exchange0(struct data *element, bool i);
+struct data *exchange0(struct data *element);
+
+std::string exchange_author(std::string author);
+
+std::string exchange_title(std::string title);
 
 unsigned int verification(std::string choice);
 
@@ -38,9 +42,10 @@ void save_file(struct data *head);
 
 unsigned int taste_publication_date();
 
+double taste_price();
+
 struct data *user_switch(struct data *head, int choice);
 
 void user(struct data *head);
 
 void load();
-
