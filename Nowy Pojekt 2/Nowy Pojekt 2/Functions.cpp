@@ -206,6 +206,15 @@ struct data *delete_book(struct data *head)
 				{
 					if (help == head)
 					{
+						if (help->next == nullptr)
+						{
+							help->down->next = help->next;
+							head = help->down;
+							delete help;
+							std::cout << "Ksiazka usunieta z bazy";
+							return head;
+						}
+
 						help->next->previous = help->down;
 						help->down->next = help->next;
 						head = help->down;
@@ -265,6 +274,8 @@ void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 
 	std::string author;
 	std::string title;
+	std::cout << std::endl;
+	std::cout <<"Dostepne ksiazki:"<< std::endl;
 
 	while (head != nullptr)
 	{
@@ -339,16 +350,16 @@ unsigned int taste_publication_date()
 		l = publication_date.length();
 		if (l != 4)
 		{
-			std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
+			std::cout << "Cos zle wpisano, sprobuj jeszcze raz." << std::endl;
 			continue;
 		}
 		date = atoi(publication_date.c_str());
-		if (date < 2017 && date > 1900)
+		if (date <= 2018 && date >= 1900)
 		{
 			return date;
 		}
 		else
-			std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
+			std::cout << "Cos zle wpisano, sprobuj jeszcze raz." << std::endl;
 	}
 	
 }
@@ -360,12 +371,16 @@ double taste_price()
 	int l;
 
 	int i;
-	int dot = 0;
-	int count = 0;
-	bool good = true;
+	int dot;
+	int count;
+	bool good;
 
 	while (true)
 	{
+		dot = 0;
+		count = 0;
+		good = true;
+
 		std::cout << "Wypisz cene:" << std::endl;
 		getline(std::cin, money);
 		l = money.length();
@@ -395,7 +410,7 @@ double taste_price()
 
 		if (good == false)
 		{
-			std::cout << "Zla cena, sproboj raz jeszcze." << std::endl;
+			std::cout << "Zla cena, sprobuj raz jeszcze." << std::endl;
 			std::cout << std::endl;
 			continue;
 		}
@@ -425,9 +440,6 @@ struct data *user_switch(struct data *head, int choice)
 		
 		price = taste_price();
 
-		/*std::cin.sync();
-		std::cin.ignore();
-		std::cin.clear();*/
 		head = add_book(head, author, title, publication_date, price);
 		return head;
 	}
