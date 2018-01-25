@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 #include "Functions.h"
-
+//-
 struct data *exchange0(struct data *element)
 {
 	for (int i = 0; i < element->author.length(); i++)
@@ -19,7 +19,7 @@ struct data *exchange0(struct data *element)
 	}
 	return element;
 }
-
+//-
 std::string exchange_author(std::string author)
 {
 	for (int i = 0; i < author.length(); i++)
@@ -29,7 +29,7 @@ std::string exchange_author(std::string author)
 	}
 	return author;
 }
-
+//-
 std::string exchange_title(std::string title)
 {
 	for (int i = 0; i < title.length(); i++)
@@ -39,7 +39,7 @@ std::string exchange_title(std::string title)
 	}
 	return title;
 }
-
+//-
 unsigned int verification(std::string choice) //sprawdza, czy u¿ytkownik wpisa³ dobr¹ wartoœæ
 {
 	int characters = choice.length();
@@ -54,7 +54,7 @@ unsigned int verification(std::string choice) //sprawdza, czy u¿ytkownik wpisa³ 
 
 	return 0;
 }
-
+//-
 struct data *add_book(struct data *head, std::string author, std::string title, unsigned int publication_date, double price)		//dodawanie ksi¹¿ki
 {
 	//head z juz istniejacej listy, lub nowe = nullptr
@@ -136,8 +136,8 @@ struct data *add_book(struct data *head, std::string author, std::string title, 
 	}
 	return head;
 }
-
-void check_title(struct data *head, std::string name)
+//-
+void check_title(struct data *head, std::string name, std::string title)
 {
 	struct data *help;
 	help = head;
@@ -146,10 +146,19 @@ void check_title(struct data *head, std::string name)
 	{
 		if (help->author == name)
 		{
-			std::cout << "Dostepne ksiazki danego autora:" << std::endl;
 			while (help != nullptr)
 			{
-				std::cout << help->title << std::endl;
+				if (help->title == title)
+				{
+					std::cout << "Ksiazka dostepna." << std::endl;
+					return;
+				}
+				else
+				{
+					std::cout << "Brak tytulu." << std::endl;
+					return;
+				}
+
 				help = help->down;
 			}
 			return;
@@ -158,13 +167,19 @@ void check_title(struct data *head, std::string name)
 	}
 	std::cout << "Brak autora." << std::endl;
 }
-
+//-
 struct data *delete_book(struct data *head)
 {
 	std::string author;
 	std::string title;
 	struct data *help;
 	help = head;
+
+	if (help == nullptr)
+	{
+		std::cout << "Brak ksiazek do usuniecia." << std::endl;
+		return head;
+	}
 
 	std::cout << "Podaj autora:" << std::endl;
 	std::getline(std::cin, author);
@@ -265,7 +280,7 @@ struct data *delete_book(struct data *head)
 	std::cout << "Brak autora." << std::endl;
 	return head;
 }
-
+//-
 void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 {
 	std::ofstream plik;
@@ -304,7 +319,7 @@ void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 	}
 	plik.close();
 }
-
+//-
 void delete_list(struct data *head)
 {
 	struct data *help1;
@@ -329,7 +344,7 @@ void delete_list(struct data *head)
 	}
 	delete head;
 }
-
+//-
 void save_file(struct data *head)	//wczytuje do pliku
 {
 	std::ofstream plik;
@@ -450,7 +465,7 @@ double taste_price()
 	price = std::stod(money);
 	return price;
 }
-
+//-
 struct data *user_switch(struct data *head, int choice)
 {
 	if (choice == 1) //Dodac ksiazke
@@ -476,13 +491,17 @@ struct data *user_switch(struct data *head, int choice)
 	if (choice == 2) //Sprawdzic dostêpnosc ksiazki
 	{
 		std::string name;
+		std::string title;
 		struct data *help;
 		help = head;
 
-		std::cout << "Podaj autora ";
+		std::cout << std::endl;
+		std::cout << "Podaj autora: ";
 		std::getline(std::cin, name);
+		std::cout << "Podaj tytul: ";
+		std::getline(std::cin, title);
 
-		check_title(head, name);
+		check_title(head, name, title);
 
 		return head;
 	}
@@ -499,8 +518,8 @@ struct data *user_switch(struct data *head, int choice)
 		return head;
 	}
 	return head;
-}
-
+}//
+//-
 void user(struct data *head)
 {
 	std::cout << "Co chcesz zrobic?" << std::endl;
@@ -550,8 +569,8 @@ void user(struct data *head)
 			break;
 		}
 	}
-}
-
+}//
+//-
 void load(std::string wczytaj)
 {
 	struct data *head = nullptr;
@@ -613,4 +632,4 @@ void load(std::string wczytaj)
 		user(head);
 	}
 	plik.close();
-}
+}//
