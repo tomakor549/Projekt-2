@@ -334,7 +334,7 @@ unsigned int taste_publication_date()
 
 	while (true)
 	{
-		std::cout << "Wypisz date wydania:" << std::endl;
+		std::cout << "Wypisz date(rok) wydania:" << std::endl;
 		getline(std::cin, publication_date);
 		l = publication_date.length();
 		if (l != 4)
@@ -343,7 +343,7 @@ unsigned int taste_publication_date()
 			continue;
 		}
 		date = atoi(publication_date.c_str());
-		if (date < 2017 && date>1900)
+		if (date < 2017 && date > 1900)
 		{
 			return date;
 		}
@@ -351,6 +351,54 @@ unsigned int taste_publication_date()
 			std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
 	}
 	
+}
+
+double taste_price()
+{
+	std::string money;
+	double price;
+	int l;
+
+	while (true)
+	{
+		std::cout << "Wypisz cene:" << std::endl;
+		getline(std::cin, money);
+		l = money.length();
+		if (l<0 && l>5)
+		{
+			std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
+			continue;
+		}
+		else
+		{
+			int i;
+			int one = 0;
+			bool good = true;
+			for (i = 0; i < l; i++)
+			{
+				if (money[i] == '.')
+				{
+					if (i == 0 && i==l)
+						good = false;
+					one++;
+				}
+				if (money[i]<'0' || money[i]>'9')
+					good = false;
+			}
+			if (one > 1)
+				good == false;
+
+			if(good==false)
+			{
+				std::cout << "Cos zle wpisano, sproboj jeszcze raz." << std::endl;
+				continue;
+			}
+		}
+		break;
+	}
+
+	price = std::stod(money);
+	return price;
 }
 
 struct data *user_switch(struct data *head, int choice)
@@ -369,12 +417,11 @@ struct data *user_switch(struct data *head, int choice)
 		
 		publication_date = taste_publication_date();
 		
-		std::cout << "Wypisz cene:" << std::endl;
-		std::cin >> price;
+		price = taste_price();
 
-		std::cin.sync();
+		/*std::cin.sync();
 		std::cin.ignore();
-		std::cin.clear();
+		std::cin.clear();*/
 		head = add_book(head, author, title, publication_date, price);
 		return head;
 	}
@@ -404,6 +451,7 @@ struct data *user_switch(struct data *head, int choice)
 		file_and_console(head);
 		return head;
 	}
+	return head;
 }
 
 void user(struct data *head)
