@@ -38,6 +38,8 @@ struct data *delete_book(struct data *head);
 
 void file_and_console(struct data *head);
 
+void delete_list(struct data *head);
+
 void save_file(struct data *head);
 
 unsigned int taste_publication_date();

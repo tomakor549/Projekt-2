@@ -305,12 +305,39 @@ void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 	plik.close();
 }
 
+void delete_list(struct data *head)
+{
+	struct data *help1;
+	struct data *help2;
+
+	while (head != nullptr)
+	{
+		if (head->down != nullptr)
+		{
+			help1 = head->down;
+			while (help1 != nullptr)
+			{
+				help2 = help1;
+				help1 = help1->down;
+				delete help2;
+			}
+			delete help1;
+		}
+		help2 = head;
+		head = head->next;
+		delete help2;
+	}
+	delete head;
+}
+
 void save_file(struct data *head)	//wczytuje do pliku
 {
 	std::ofstream plik;
 	plik.open("new.txt");
 	std::string author;
 	std::string title;
+	struct data *start;
+	start = head;
 
 	while (head != nullptr)
 	{
@@ -335,6 +362,8 @@ void save_file(struct data *head)	//wczytuje do pliku
 		head = head->next;
 	}
 	plik.close();
+
+	delete_list(start);
 }
 
 unsigned int taste_publication_date()
