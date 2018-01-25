@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 #include "Functions.h"
-//-
+
 struct data *exchange0(struct data *element)
 {
 	for (int i = 0; i < element->author.length(); i++)
@@ -19,7 +19,7 @@ struct data *exchange0(struct data *element)
 	}
 	return element;
 }
-//-
+
 std::string exchange_author(std::string author)
 {
 	for (int i = 0; i < author.length(); i++)
@@ -29,7 +29,7 @@ std::string exchange_author(std::string author)
 	}
 	return author;
 }
-//-
+
 std::string exchange_title(std::string title)
 {
 	for (int i = 0; i < title.length(); i++)
@@ -39,7 +39,7 @@ std::string exchange_title(std::string title)
 	}
 	return title;
 }
-//-
+
 unsigned int verification(std::string choice) //sprawdza, czy u¿ytkownik wpisa³ dobr¹ wartoœæ
 {
 	int characters = choice.length();
@@ -54,7 +54,7 @@ unsigned int verification(std::string choice) //sprawdza, czy u¿ytkownik wpisa³ 
 
 	return 0;
 }
-//-
+
 struct data *add_book(struct data *head, std::string author, std::string title, unsigned int publication_date, double price)		//dodawanie ksi¹¿ki
 {
 	//head z juz istniejacej listy, lub nowe = nullptr
@@ -136,7 +136,7 @@ struct data *add_book(struct data *head, std::string author, std::string title, 
 	}
 	return head;
 }
-//-
+
 void check_title(struct data *head, std::string name, std::string title)
 {
 	struct data *help;
@@ -167,7 +167,7 @@ void check_title(struct data *head, std::string name, std::string title)
 	}
 	std::cout << "Brak autora." << std::endl;
 }
-//-
+
 struct data *delete_book(struct data *head)
 {
 	std::string author;
@@ -280,7 +280,7 @@ struct data *delete_book(struct data *head)
 	std::cout << "Brak autora." << std::endl;
 	return head;
 }
-//-
+
 void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 {
 	std::ofstream plik;
@@ -319,7 +319,7 @@ void file_and_console(struct data *head)	//wczytuje na konsole i do pliku
 	}
 	plik.close();
 }
-//-
+
 void delete_list(struct data *head)
 {
 	struct data *help1;
@@ -344,7 +344,7 @@ void delete_list(struct data *head)
 	}
 	delete head;
 }
-//-
+
 void save_file(struct data *head)	//wczytuje do pliku
 {
 	std::ofstream plik;
@@ -465,7 +465,7 @@ double taste_price()
 	price = std::stod(money);
 	return price;
 }
-//-
+
 struct data *user_switch(struct data *head, int choice)
 {
 	if (choice == 1) //Dodac ksiazke
@@ -519,7 +519,7 @@ struct data *user_switch(struct data *head, int choice)
 	}
 	return head;
 }//
-//-
+
 void user(struct data *head)
 {
 	std::cout << "Co chcesz zrobic?" << std::endl;
@@ -570,7 +570,7 @@ void user(struct data *head)
 		}
 	}
 }//
-//-
+
 void load(std::string wczytaj)
 {
 	struct data *head = nullptr;

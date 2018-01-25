@@ -32,7 +32,7 @@ unsigned int verification(std::string choice);
 
 struct data *add_book(struct data *head, std::string author, std::string title, unsigned int publication_date, double price);
 
-void check_title(struct data *head, std::string name);
+void check_title(struct data *head, std::string name, std::string title);
 
 struct data *delete_book(struct data *head);
 
